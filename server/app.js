@@ -1,8 +1,14 @@
 const express = require('express')
 const graphqlHTTP = require('express-graphql')
 const schemas = require('./schema/schema')
+const mongoose = require('mongoose')
 
 const app = express();
+
+mongoose.connect('mongodb://dash:dash123@ds261040.mlab.com:61040/gql-ninja',{ useNewUrlParser: true })
+mongoose.connection.once('open', () => {
+    console.log('connected to database');
+});
 
 app.use('/graphql',graphqlHTTP({
     schema: schemas,
